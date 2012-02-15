@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 /**
  * Created by IntelliJ IDEA.
  * User: degtyarev.dm
- * Date: 24.01.12
- * Time: 18:32
  */
 public class Start
 {
@@ -22,9 +20,9 @@ public class Start
         //http://goo.gl/K2zBM   ->  http://habrahabr.ru/
         //http://t.co/TENldP40  ->  http://moto.ly/rls2
 
-        String url = "http://t.co/7gvMxglJ";
+        String url = "http://habrahabr.ru/";
         Dereference dereference = new Dereference();
-        dereference.dereferenceUrl(url);
+        System.out.println(dereference.dereferenceUrl(url));
         logger.info("[finish]");
     }
 }

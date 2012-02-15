@@ -12,21 +12,15 @@ import java.io.IOException;
 /**
  * Created by IntelliJ IDEA.
  * User: degtyarev.dm
- * Date: 24.01.12
- * Time: 18:33
  */
-public abstract class DereferenceReferences
+public class DereferenceReferences
 {
     private static Logger logger = Logger.getLogger(DereferenceReferences.class);
 
     private static final String USER_AGENT="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
     private static final String REFERRER = "http://www.google.com";
     private static final boolean FOLLOW_REDIRECTS = false;
-    public String dereference(String referenceUrl)
-    {
-        return referenceUrl;
-    }
-    
+
     public Connection.Response getResponse(String url)
     {
         Connection.Response response = null;
@@ -46,14 +40,22 @@ public abstract class DereferenceReferences
         Connection.Response response = getResponse(referenceUrl);
         if(response!=null && response.headers()!=null && !response.headers().isEmpty() && response.headers().get("Location")!=null)
         {
+            String location = response.headers().get("Location");
             if(logger.isDebugEnabled())
-                logger.debug("Location = "+response.headers().get("Location"));
-
-            return response.headers().get("Location");
+                logger.debug("Location = "+location);
+            String subLocation = getResponse(response.headers().get("Location")).headers().get("Location");
+            while(subLocation!=null && !subLocation.equals(location))
+            {
+                if(logger.isDebugEnabled())
+                    logger.debug("subLocation="+subLocation);
+                location = subLocation;
+                subLocation = getResponse(location).headers().get("Location");
+            }
+            return location;
         }
         else
         {
-            logger.warn("Can't dereference!");
+            logger.info("Can't dereference!");
             return referenceUrl;
         }
     }

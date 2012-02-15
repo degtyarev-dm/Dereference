@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dereference" default="all">
+
+    <!-- First, I create my classpath (build.classpath) from all the jar files in my lib directory -->
+    <path id="build.classpath">
+        <fileset dir="lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <!-- Next, my package task uses that classpath -->
+    <target name="package" depends="compile">
+        <echo>=== PACKAGE ===</echo>
+
+        <!-- convert build.classpath to mf.classpath (the string needed for the manifest task) -->
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="build.classpath" />
+            <flattenmapper />
+        </pathconvert>
+
+        <!-- now build the manifest file, using mf.classpath -->
+        <tstamp/><!-- needed for TODAY -->
+        <manifest file="MANIFEST.MF">
+            <attribute name="Built-By" value="${manifest.built.by}"/>
+            <attribute name="Created-By" value="${manifest.created.by}"/>
+            <attribute name="Main-Class" value="${manifest.main.class}"/>
+            <attribute name="Implementation-Version" value="${version.number}-b${build.number}"/>
+            <attribute name="Built-Date" value="${TODAY}"/>
+            <attribute name="Class-Path" value="${mf.classpath}" />
+        </manifest>
+
+        <!-- create the jar file, including the manifest file we just created -->
+        <jar basedir="${dest.dir.classes}"
+             destfile="${package.file}"
+             includes="**/*.*"
+             excludes="**/*Test*"
+             manifest="MANIFEST.MF" />
+
+        <!-- copy all the jar files out to the destination directory (dest.dir) -->
+        <copy todir="${dest.dir}">
+            <fileset dir="${lib.dir}">
+                <exclude name="junit*" />
+                <include name="*.jar"/>
+                <include name="*.zip"/>
+            </fileset>
+        </copy>
+        <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather
+   include it in the jar -->
+        <copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
+        <copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />
+        <delete dir="${dest.dir.classes}" />
+    </target>
+
+</project>
