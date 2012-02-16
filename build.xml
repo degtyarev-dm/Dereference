@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="dereference" default="all">
+<project name="dereference" default="package">
+    <description>
+        simple example build file
+    </description>
+    <!-- set global properties for this build -->
+    <property name="manifest.built.by" value="Degtyarev.Dm"/>
+    <property name="manifest.created.by" value="Degtyarev.Dm"/>
+    <property name="manifest.main.class"  value="org.demond.java.dereference.Start"/>
+    <property name="version.number"  value="0.1"/>
+    <property name="build.number"  value="1"/>
+    <property name="dest.dir.classes"  value="out/production/Dereference/"/>
+    <property name="package.file"  value="dereference.jar"/>
+    <property name="dest.dir"  value="out/production/Dereference/"/>
+    <property name="lib.dir"  value="lib"/>
+    <property name="resources.dir"  value="src"/>
+    <property name="properties.file"  value=""/>
+
 
     <!-- First, I create my classpath (build.classpath) from all the jar files in my lib directory -->
     <path id="build.classpath">
@@ -9,7 +25,7 @@
     </path>
 
     <!-- Next, my package task uses that classpath -->
-    <target name="package" depends="compile">
+    <target name="package">
         <echo>=== PACKAGE ===</echo>
 
         <!-- convert build.classpath to mf.classpath (the string needed for the manifest task) -->
@@ -47,8 +63,8 @@
         <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather
    include it in the jar -->
         <copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
-        <copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />
-        <delete dir="${dest.dir.classes}" />
+        <!--<copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />-->
+        <!--<delete dir="${dest.dir.classes}" />-->
     </target>
 
 </project>
