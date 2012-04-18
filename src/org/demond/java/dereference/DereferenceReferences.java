@@ -8,6 +8,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,43 +28,82 @@ public class DereferenceReferences
     private static final String USER_AGENT="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
     private static final String REFERRER = "http://www.google.com";
     private static final boolean FOLLOW_REDIRECTS = false;
-
-    public Connection.Response getResponse(String url)
+    private int maxNum = 10;
+    private Pattern pattern = Pattern.compile("HTTP\\/1\\.\\d\\s+(\\d{3})\\s+\\w+");
+    protected class Response
     {
-        Connection.Response response = null;
+       String code;
+       String location;
+    }
+
+    public Map<String,String> getHTTPHeader(String urlString)
+    {
+        Map<String,String> responseMap = new HashMap<String, String>();
         try
         {
-            response = Jsoup.connect(url).referrer(REFERRER).userAgent(USER_AGENT).followRedirects(FOLLOW_REDIRECTS).execute();
-            return response;
-        } catch (IOException e)
-        {
-            logger.warn("Warning: ",e);
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setInstanceFollowRedirects(false);
+            System.setProperty("http.agent", USER_AGENT);
+            Map<String,List<String>> headerMap = connection.getHeaderFields();
+            for(String name: headerMap.keySet())
+            {
+                for(String value : headerMap.get(name))
+                {
+                    responseMap.put(name,value);
+                }
+            }
         }
-        return response;
+        catch (Exception e)
+        {
+            logger.warn("Warning",e);
+        }
+        return responseMap;
     }
     
     protected String getLocation(String referenceUrl)
     {
-        Connection.Response response = getResponse(referenceUrl);
-        if(response!=null && response.headers()!=null && !response.headers().isEmpty() && response.headers().get("Location")!=null)
+        Response response = null;
+        do
         {
-            String location = response.headers().get("Location");
+            if(response!=null && response.location!=null)
+                referenceUrl = response.location;
+            response = getResponse(referenceUrl);
             if(logger.isDebugEnabled())
-                logger.debug("Location = "+location);
-            String subLocation = getResponse(response.headers().get("Location")).headers().get("Location");
-            while(subLocation!=null && !subLocation.equals(location))
             {
-                if(logger.isDebugEnabled())
-                    logger.debug("subLocation="+subLocation);
-                location = subLocation;
-                subLocation = getResponse(location).headers().get("Location");
+                logger.debug("Location = "+response.location);
+                logger.debug("Code = "+response.code);
+                logger.debug("maxNum = "+ maxNum);
             }
-            return location;
+            maxNum--;
+
         }
-        else
+        while(!response.code.equals("200") && maxNum>0);
+        return referenceUrl;
+    }
+
+    private Response getResponse(String referenceUrl)
+    {
+        Response response = new Response();
+        Map<String,String> headerMap = getHTTPHeader(referenceUrl);
+        for(String key : headerMap.keySet())
         {
-            logger.info("Can't dereference!");
-            return referenceUrl;
+
+            if(key == null)
+            {
+                Matcher matcher = pattern.matcher(headerMap.get(key));
+                if(matcher.find())
+                    response.code = matcher.group(1);
+
+            }
+            else
+            {
+                if(key.equalsIgnoreCase("Location"))
+                response.location = headerMap.get(key);
+            }
+            if(logger.isDebugEnabled())
+                logger.debug(key + " => "+headerMap.get(key));
         }
+        return response;
     }
 }
