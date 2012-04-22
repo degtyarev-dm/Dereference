@@ -1,15 +1,7 @@
 package org.demond.java.dereference;
 
 import org.apache.log4j.Logger;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +18,6 @@ public class DereferenceReferences
     private static Logger logger = Logger.getLogger(DereferenceReferences.class);
 
     private static final String USER_AGENT="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
-    private static final String REFERRER = "http://www.google.com";
-    private static final boolean FOLLOW_REDIRECTS = false;
     private int maxNum = 10;
     private Pattern pattern = Pattern.compile("HTTP\\/1\\.\\d\\s+(\\d{3})\\s+\\w+");
     protected class Response
@@ -101,8 +91,6 @@ public class DereferenceReferences
                 if(key.equalsIgnoreCase("Location"))
                 response.location = headerMap.get(key);
             }
-            if(logger.isDebugEnabled())
-                logger.debug(key + " => "+headerMap.get(key));
         }
         return response;
     }

@@ -12,8 +12,11 @@ public class Dereference
         return dereference.getLocation(url);
     }
 
-    public String dereferenceAndCheckUrl(String url)
+    public String [] dereferenceAndCheckUrl(String url)
     {
-        return null;
+        GoogleSafebrowsingChecker gsc = new GoogleSafebrowsingChecker();
+        String reference=dereferenceUrl(url);
+        String check = gsc.check(reference);
+        return new String[] {reference,check};
     }
 }
