@@ -1,0 +1,112 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Safe Browsing API Documentation</title>
+    <link href="http://code.google.com/css/dev_docs.css" rel="stylesheet" type="text/css"/>
+    <link href="http://code.google.com/css/local_extensions.css" rel="stylesheet" type="text/css"/>
+    <link href="http://code.google.com/css/product-page.css" rel="stylesheet" type="text/css"/><!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="http://code.google.com/css/ie7only.css" />
+<![endif]--><!--[if lte IE 6]>
+  <link rel="stylesheet" type="text/css" href="http://code.google.com/css/ie6only.css" />
+<![endif]--><!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="http://code.google.com/css/ieonly.css" />
+<![endif]-->
+  </head>
+<body id="overview_page">
+<a name="top"/>
+    <div style="position:absolute;right:8px;top:3px">
+  <div align=right id=guser style="font-size:84%;
+                                          padding:0 0 4px"
+     width=100%>
+    <nobr>
+        
+        <b>
+        degtyarev.dm@gmail.com
+        </b>
+         | 
+          <a href="https://accounts.google.com/ManageAccount"
+>
+        
+        My Account
+        
+          </a>
+         | 
+          <a href="http://accounts.google.com/Logout?continue=http://sb.google.com/safebrowsing/api_signup%3FagreeTerms%3D1"
+>
+        
+        Sign out
+        
+          </a>
+    </nobr>
+  </div>
+    </div>
+<div id="header">
+   <div id="logo"><a href="http://www.google.com/"><img src="http://code.google.com/images/code_sm.png" alt="Google Safe Browsing"/></a></div>
+   <h1 id="doc_title">Google Safe Browsing API</h1>
+</div>
+<div id="sidenav">
+<ul>
+   <li>
+     <h1>Safe Browsing</h1>
+     <ul>
+      <!-- ID tag identifies current page -->
+       <li><a href="http://code.google.com/apis/safebrowsing/overview.html" id="overview_link">Overview</a></li>
+		<li><a href="http://code.google.com/apis/safebrowsing/key_signup.html">Sign up for an API key</a></li>
+       <li><a href="http://code.google.com/apis/safebrowsing/developers_guide.html" id="developers_guide_link">Developer's Guide</a></li>
+       <li><a href="http://code.google.com/apis/safebrowsing/reference.html" id="reference_link">Reference Guide</a></li>
+     </ul>
+  </li>
+  <li>
+    <h1>Support Resources</h1>
+    <ul>
+      <li><a href="http://groups.google.com/group/google-safe-browsing-api">Discussion Group</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<div id="pagecontent">
+<h1 id="page_title">Google Safe Browsing API</h1>
+        <div id="content">
+        <!-- begin body text -->
+<h2>Thank you for signing up for a Google Safe Browsing API key!</h2>
+<p>Your key is:</p>
+<pre class="code">ABQIAAAACtYlh1rLPpEdO5cpRqlpGhQMm0KiMby2vkWuSNxo4P0QFYaO-Q</pre>
+<p>This is an example GET request for the lookup API:</p>
+<pre class="code">
+  https://sb-ssl.google.com/safebrowsing/api/lookup?client=api&amp;apikey=ABQIAAAACtYlh1rLPpEdO5cpRqlpGhQMm0KiMby2vkWuSNxo4P0QFYaO-Q&amp;appver=1.0&amp;pver=3.0&amp;url=http%3A%2F%2Fianfette.org%2F
+</pre>
+<p>The v2 API uses a POST request instead of a GET. Here is an example POST body</p>
+<pre class="code">
+  goog-malware-shavar;
+  googpub-phish-shavar;
+</pre>
+<p>to be used with the following URL:</p>
+<pre class="code">
+  http://safebrowsing.clients.google.com/safebrowsing/downloads?client=api&amp;apikey=ABQIAAAACtYlh1rLPpEdO5cpRqlpGhQMm0KiMby2vkWuSNxo4P0QFYaO-Q&amp;appver=1.0&amp;pver=2.2
+</pre>
+<p>Check out the <a href="http://code.google.com/apis/safebrowsing/developers_guide_v2.html">Developer's Guide</a> and
+<a href="http://code.google.com/apis/safebrowsing/lookup_guide.html"> Lookup Developer's Guide</a> for more information.</p>
+        <!-- end body text -->
+  </div>
+</div>
+<!-- ########## PAGE FOOTER ########## -->
+<div id="footer">
+  <div id="footerlogo"><img src="http://code.google.com/images/art.gif" alt=""></div>
+  <div id="copyright">
+    <p>&copy; Google Inc. 2007 - <a href="http://www.google.com/privacy.html">Privacy Policy</a> - <a href="http://www.google.com/terms_of_service.html">Terms and Conditions</a> - <a href="http://www.google.com/about.html">About Google</a></p>
+  </div>
+  <!-- end copyright -->
+</div>
+<!-- ########## END PAGE FOOTER ########## -->
+<p id="date">Last modified:
+<script type="text/javascript">
+  <!--
+  var lm = new Date(document.lastModified);
+  document.write(lm.toDateString());
+  //-->
+</script>
+</p>
+  </body>
+</html>

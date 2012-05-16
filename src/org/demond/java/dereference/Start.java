@@ -22,12 +22,20 @@ public class Start
         //http://t.co/OH0GTAUS  ->  https://docs.google.com/file/d/0B7_JZGebl8cKdzNDQlNPZUVRcXlObWhZcGVqMkR2Zw/edit?pli=1
         //http://is.gd/OREr5X   ->  http://ianfette.org malware
 
-        String url = "http://is.gd/OREr5X";
+        String url = "http://clckru/0q";
+        try{
+
         Dereference dereference = new Dereference();
         System.out.println(dereference.dereferenceUrl(url));
-        for(String result: dereference.dereferenceAndCheckUrl(url))
-        System.out.print(result+" ");
+//        for(String result: dereference.dereferenceAndCheckUrl(url))
 
+//        System.out.print(result+" ");
+
+        }
+        catch(Exception e)
+        {
+            System.out.print("Trobls");
+        }
     }
 
 }

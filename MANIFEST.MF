@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: Degtyarev.Dm
+Built-By: Degtyarev.Dm
+Main-Class: org.demond.java.dereference.Start
+Implementation-Version: 0.1-b1
+Built-Date: May 9 2012
+Class-Path: log4j-1.2.16.jar
+

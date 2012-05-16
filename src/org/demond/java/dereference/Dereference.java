@@ -7,12 +7,14 @@ package org.demond.java.dereference;
 public class Dereference
 {
     public String dereferenceUrl(String url)
+            throws Exception
     {
         DereferenceReferences dereference = new DereferenceReferences();
         return dereference.getLocation(url);
     }
 
     public String [] dereferenceAndCheckUrl(String url)
+            throws Exception
     {
         GoogleSafebrowsingChecker gsc = new GoogleSafebrowsingChecker();
         String reference=dereferenceUrl(url);

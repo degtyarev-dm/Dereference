@@ -12,6 +12,7 @@
     <property name="dest.dir.classes"  value="out/production/Dereference/"/>
     <property name="package.file"  value="dereference.jar"/>
     <property name="dest.dir"  value="out/production/Dereference/"/>
+    <property name="dest.lib.dir"  value="lib"/>
     <property name="lib.dir"  value="lib"/>
     <property name="resources.dir"  value="src"/>
     <property name="properties.file"  value=""/>
@@ -19,10 +20,17 @@
 
     <!-- First, I create my classpath (build.classpath) from all the jar files in my lib directory -->
     <path id="build.classpath">
-        <fileset dir="lib">
+        <fileset dir="${dest.lib.dir}">
             <include name="**/*.jar" />
         </fileset>
     </path>
+    <!-- copy all the jar files out to the destination directory (dest.dir) -->
+    <!--<copy todir="${dest.dir}">-->
+        <!--<fileset dir="${lib.dir}">-->
+            <!--<include name="*.jar"/>-->
+            <!--<include name="*.zip"/>-->
+        <!--</fileset>-->
+    <!--</copy>-->
 
     <!-- Next, my package task uses that classpath -->
     <target name="package">
@@ -52,19 +60,11 @@
              excludes="**/*Test*"
              manifest="MANIFEST.MF" />
 
-        <!-- copy all the jar files out to the destination directory (dest.dir) -->
-        <copy todir="${dest.dir}">
-            <fileset dir="${lib.dir}">
-                <exclude name="junit*" />
-                <include name="*.jar"/>
-                <include name="*.zip"/>
-            </fileset>
-        </copy>
+
         <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather
    include it in the jar -->
         <copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
-        <!--<copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />-->
-        <!--<delete dir="${dest.dir.classes}" />-->
+
     </target>
 
 </project>

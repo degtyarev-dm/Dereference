@@ -52,6 +52,7 @@ public class DereferenceReferences
     }
     
     protected String getLocation(String referenceUrl)
+            throws Exception
     {
         Response response = null;
         do
@@ -66,7 +67,6 @@ public class DereferenceReferences
                 logger.debug("maxNum = "+ maxNum);
             }
             maxNum--;
-
         }
         while(!response.code.equals("200") && maxNum>0);
         return referenceUrl;
